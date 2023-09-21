@@ -3,6 +3,7 @@ package com.example.tocomp.core.models
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import java.util.UUID
 
 /**
  * A data class that represents a task.
@@ -12,6 +13,7 @@ import androidx.compose.runtime.setValue
  * @param description The description of the task
  */
 class TaskData(
+    val id: String = UUID.randomUUID().toString(),
     title: String,
     isDone: Boolean,
     description: String = ""

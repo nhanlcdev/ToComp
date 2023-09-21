@@ -9,11 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.example.tocomp.core.components.Task
+import com.example.tocomp.core.components.Tasks
 import com.example.tocomp.core.models.TaskData
 import com.example.tocomp.core.theme.ToCompTheme
 
@@ -26,11 +25,14 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val sampleTask by remember {
-                        mutableStateOf(TaskData("Title", false, "Description"))
+                    val tasks = remember {
+                        mutableStateListOf<TaskData>(
+                            TaskData(title = "Task 1", isDone = false),
+                            TaskData(title = "Task 2", isDone = false),
+                        )
                     }
 
-                    Task(sampleTask)
+                    Tasks(tasks)
                 }
             }
         }
