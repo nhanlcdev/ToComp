@@ -1,5 +1,6 @@
 package com.example.tocomp.core.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Checkbox
@@ -8,25 +9,35 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import com.example.tocomp.core.models.TaskData
 
+const val LOG_TAG = "Tag"
 
 /**
  * A task composable that displays a checkbox, title and description.
  *
  * @param task The task to display
  * @param onTitleChange Called when the title is changed.
- *  Default implementation updates the task title
+ *  Default implementation updates the task title and debug logs the change
  * @param onDescriptionChange Called when the description is changed.
- *  Default implementation updates the task description
+ *  Default implementation updates the task description and debug logs the change
  * @param onCheckedChange Called when the checkbox is checked or unchecked.
- *  Default implementation updates the task isDone property
+ *  Default implementation updates the task isDone property and debug logs the change
  */
 @ExperimentalMaterial3Api
 @Composable
 fun Task(
     task: TaskData,
-    onTitleChange: (String) -> Unit = { task.title = it },
-    onDescriptionChange: (String) -> Unit = { task.description = it },
-    onCheckedChange: (Boolean) -> Unit = { task.isDone = it }
+    onTitleChange: (String) -> Unit = {
+        task.title = it
+        Log.d(LOG_TAG, "${task.id}, title, '${task.title}'")
+    },
+    onDescriptionChange: (String) -> Unit = {
+        task.description = it
+        Log.d(LOG_TAG, "${task.id}, description, '${task.description}'")
+    },
+    onCheckedChange: (Boolean) -> Unit = {
+        task.isDone = it
+        Log.d(LOG_TAG, "${task.id}, isDone, ${task.isDone}")
+    }
 ){
     Row {
         Checkbox(checked = task.isDone, onCheckedChange = onCheckedChange)
