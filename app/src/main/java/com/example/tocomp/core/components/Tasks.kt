@@ -17,8 +17,10 @@ import com.example.tocomp.core.models.TaskData
  */
 @ExperimentalMaterial3Api
 @Composable
-fun Tasks(tasks: List<TaskData>){
-    LazyColumn {
+fun Tasks(tasks: List<TaskData>, modifier: Modifier = Modifier){
+    LazyColumn(
+        modifier = modifier,
+    ) {
         items(tasks.size, key = { tasks[it].id }) { index ->
             Task(tasks[index])
             Divider(modifier = Modifier.fillMaxWidth().padding(5.dp))
