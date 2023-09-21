@@ -32,10 +32,11 @@ class MainActivity : ComponentActivity() {
                         floatingActionButton = { FloatingAddTaskButton {  } }
                     ) { paddingValue ->
                         val tasks = remember {
-                            mutableStateListOf<TaskData>(
-                                TaskData(title = "Task 1", isDone = false),
-                                TaskData(title = "Task 2", isDone = false),
-                            )
+                            mutableStateListOf<TaskData>().apply {
+                                repeat(10) {
+                                    add(TaskData.newTask(title = "Task $it"))
+                                }
+                            }
                         }
 
                         Tasks(tasks, modifier = Modifier.padding(paddingValue))
