@@ -3,8 +3,12 @@ package com.example.tocomp.core.components
 import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import com.example.tocomp.core.models.TaskData
@@ -37,6 +41,9 @@ fun Task(
     onCheckedChange: (Boolean) -> Unit = {
         task.isDone = it
         Log.d(LOG_TAG, "${task.id}, isDone, ${task.isDone}")
+    },
+    onClickRemove: () -> Unit = {
+        Log.d(LOG_TAG, "${task.id}, remove")
     }
 ){
     Row {
@@ -44,6 +51,9 @@ fun Task(
         Column {
             TextField(value = task.title, onValueChange = onTitleChange)
             TextField(value = task.description, onValueChange = onDescriptionChange)
+        }
+        Button(onClick = { onClickRemove(); Log.d(LOG_TAG, "${task.id}, remove") }) {
+            Icon(Icons.Filled.Delete, "Delete task button")
         }
     }
 }

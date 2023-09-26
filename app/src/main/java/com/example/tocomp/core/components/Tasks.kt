@@ -17,13 +17,16 @@ import com.example.tocomp.core.models.TaskData
  */
 @ExperimentalMaterial3Api
 @Composable
-fun Tasks(tasks: List<TaskData>, modifier: Modifier = Modifier){
+fun Tasks(tasks: List<TaskData>, modifier: Modifier = Modifier, onRemove: (TaskData) -> Unit){
     LazyColumn(
         modifier = modifier,
     ) {
         items(tasks.size, key = { tasks[it].id }) { index ->
-            Task(tasks[index])
-            HorizontalDivider(modifier = Modifier.fillMaxWidth().padding(5.dp))
+            val taskData = tasks[index]
+            Task(taskData, onClickRemove = { onRemove(taskData) })
+            HorizontalDivider(modifier = Modifier
+                .fillMaxWidth()
+                .padding(5.dp))
         }
     }
 }

@@ -45,32 +45,42 @@ class MainActivity : ComponentActivity() {
                     var isHidden by remember { mutableStateOf(true) }
 
                     if (isHidden) {
-                        MainContent(tasks) { isHidden = false }
+                        MainContent(
+                            tasks,
+                            onFloatingAddButtonClicked = { isHidden = false }) { tasks.remove(it) }
                     } else {
                         BottomSheetScaffold(sheetContent = {
                             TaskAdder { tasks.add(it) }
-                        }) { MainContent(tasks, it) { isHidden = false } }
+                        }) {
+                            MainContent(
+                                tasks,
+                                it,
+                                onFloatingAddButtonClicked = {
+                                    isHidden = false
+                                }) { taskData -> tasks.remove(taskData) }
+                        }
                     }
                 }
             }
         }
     }
-}
 
-@Composable
-fun MainContent(
-    tasks: List<TaskData> = mutableStateListOf(),
-    innerPadding: PaddingValues = PaddingValues(),
-    onFloatingAddButtonClicked: () -> Unit
-) {
-    Scaffold(
-        floatingActionButton = { FloatingAddTaskButton(onFloatingAddButtonClicked) }
-    ) { innerPadding2 ->
-        Tasks(
-            tasks,
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(innerPadding2),
-        )
-    }
-}
+    @Composable
+    fun MainContent(
+        tasks: List<TaskData> = mutableStateListOf(),
+        innerPadding: PaddingValues = PaddingValues(),
+        onFloatingAddButtonClicked: () -> Unit,
+        onRemove: (TaskData) -> Unit
+    ) {
+        Scaffold(
+            floatingActionButton = { FloatingAddTaskButton(onFloatingAddButtonClicked) }
+        ) { innerPadding2 ->
+            Tasks(
+                tasks,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .padding(innerPadding2),
+                onRemove = onRemove
+            )
+        }
+    }}
